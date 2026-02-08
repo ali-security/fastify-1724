@@ -7,9 +7,15 @@ const Fastify = require('..')
 const ajvMergePatch = require('ajv-merge-patch')
 const ajvErrors = require('ajv-errors')
 
-const buildValidatorAJV8 = require('@fastify/ajv-compiler-8')
+let buildValidatorAJV8
+try {
+  buildValidatorAJV8 = require('@fastify/ajv-compiler-8')
+} catch (err) {
+  // @fastify/ajv-compiler-8 is optional and may not be available
+  buildValidatorAJV8 = null
+}
 
-test('Ajv8 usage instead of the bundle one', t => {
+test('Ajv8 usage instead of the bundle one', { skip: !buildValidatorAJV8 && '@fastify/ajv-compiler-8 not available' }, t => {
   t.plan(1)
 
   t.test('use new ajv8 option', t => {
@@ -47,7 +53,7 @@ test('Ajv8 usage instead of the bundle one', t => {
   })
 })
 
-test('Ajv8 usage with plugins', { skip: 'until npm 7.2 will be bundled with node.js 16 https://github.com/npm/cli/issues/3147' }, t => {
+test('Ajv8 usage with plugins', { skip: (!buildValidatorAJV8 ? '@fastify/ajv-compiler-8 not available' : 'until npm 7.2 will be bundled with node.js 16 https://github.com/npm/cli/issues/3147') }, t => {
   t.plan(2)
 
   t.test('use new ajv8 option', t => {
