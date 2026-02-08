@@ -49,21 +49,3 @@ jobs:
           github-token: ${{ secrets.github_token }}
           parallel: true
           flag-name: run-${{ matrix.node-version }}-${{ matrix.os }}
-
-  coverage:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
-
-  automerge:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fastify/github-action-merge-dependabot@v2.0.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
