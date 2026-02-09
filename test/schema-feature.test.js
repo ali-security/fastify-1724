@@ -204,7 +204,8 @@ test('Should throw of the schema does not exists in output', t => {
 
   fastify.ready(err => {
     t.equal(err.code, 'FST_ERR_SCH_SERIALIZATION_BUILD')
-    t.equal(err.message, "Failed building the serialization schema for GET: /:id, due to error Cannot read property 'type' of undefined") // error from fast-json-strinfigy
+    // Node.js 16+ uses "Cannot read properties of undefined (reading 'type')" instead of "Cannot read property 'type' of undefined"
+    t.ok(err.message.includes("Failed building the serialization schema for GET: /:id, due to error Cannot read") && err.message.includes("'type'") && err.message.includes("undefined"), `Expected error message about type and undefined, got: ${err.message}`)
   })
 })
 
