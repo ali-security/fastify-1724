@@ -13,7 +13,7 @@
     "test:ci": "npm run unit && npm run test:typescript",
     "test:report": "npm run unit:report && npm run test:typescript",
     "test:typescript": "tsd",
-    "unit": "tap -J test/*.test.js test/*/*.test.js",
+    "unit": "tap -J --no-coverage test/*.test.js test/*/*.test.js",
     "unit:junit": "tap-mocha-reporter xunit < out.tap > test/junit-testresults.xml",
     "unit:report": "tap -J test/*.test.js test/*/*.test.js | tee out.tap"
   },
